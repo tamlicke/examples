@@ -4,15 +4,16 @@ namespace clone
 {
 	public class WheeledRobot : Robot
 	{
-		private int number_of_wheels = 0;
+		private int number_of_wheels = 0; 
 
 		public WheeledRobot ()
 		{
-			Console.WriteLine ("Default Constructor");
+			Console.WriteLine ("WheeledRobot Default Constructor");
 		}
 
-		public WheeledRobot(WheeledRobot original)
+		public WheeledRobot(WheeledRobot original) : base(original)
 		{
+			Console.WriteLine ("WheeledRobot Copy Constructor");
 			this.deep_copy (original);
 		}
 

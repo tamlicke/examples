@@ -7,16 +7,25 @@ namespace clone
 		public static void Main (string[] args)
 		{
 			Console.WriteLine("** Start Main **");
-			Robot robotPreference = setup();
+			Robot robotPreference = setupWheeled();
+			use(robotPreference);
+			robotPreference = setupLegged ();
 			use(robotPreference);
 			Console.WriteLine("** End Main **");
 
 		}
 
-		public static Robot setup()
+		public static Robot setupWheeled()
 		{
 			Console.WriteLine("**** Start setup ****");
 			return new WheeledRobot();
+		}
+
+
+		public static Robot setupLegged()
+		{
+			Console.WriteLine("**** Start setup ****");
+			return new LeggedRobot();
 		}
 
 
@@ -24,6 +33,9 @@ namespace clone
 		{
 			Console.WriteLine("**** Start use ****");
 			Robot copy = null;
+
+			obj.number_of_sensors = 2;
+
 		    if (obj is Robot)
 			{
 				Console.WriteLine("Cloning object");

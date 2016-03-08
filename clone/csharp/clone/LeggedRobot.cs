@@ -2,7 +2,7 @@
 
 namespace clone
 {
-	public class LeggedRobot
+	public class LeggedRobot : Robot
 	{
 		private int _number_of_legs = 0;
 
@@ -16,6 +16,22 @@ namespace clone
 		public LeggedRobot ()
 		{
 			Console.WriteLine ("Default Constructor!");
+		}
+
+		public LeggedRobot(LeggedRobot original) : base(original)
+		{
+			Console.WriteLine ("LeggedRobot Copy Constructor");
+			this.deep_copy (original);
+		}
+
+		public override Robot clone()
+		{
+			return new LeggedRobot (this);
+		}
+
+		private void deep_copy(LeggedRobot original)
+		{
+			this.number_of_legs = original.number_of_legs;
 		}
 	}
 }
