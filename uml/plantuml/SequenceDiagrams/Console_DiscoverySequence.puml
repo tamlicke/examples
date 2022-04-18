@@ -1,0 +1,31 @@
+@startuml
+header Page: Revision 1
+footer Page %page% of %lastpage%
+
+title Console_Service Discovery Sequence
+
+actor APPLICATION
+collections gRPC_HTTP2
+actor Console_Service
+collections FracTalk_TCP_IP
+actor Syringe_FRU
+actor Valve_FRU
+actor Heater_FRU
+
+== Console Initialization ==
+Syringe_FRU -> Valve_FRU: FRU Discovery UDP
+activate Syringe_FRU
+Syringe_FRU -> Heater_FRU: FRU Discovery UDP
+Syringe_FRU <-- Valve_FRU: Discovery Response
+Syringe_FRU <-- Heater_FRU: Discovery Response
+deactivate Syringe_FRU
+
+== Application Startup Console Discovery ==
+APPLICATION -> Console_Service: Console Discovery Request
+activate APPLICATION
+Console_Service -> Syringe_FRU: Console Discovery UDP
+Console_Service <-- Syringe_FRU: Console Discovery Response
+APPLICATION <-- Console_Service: Console Discovery Response
+deactivate APPLICATION
+
+@enduml

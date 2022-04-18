@@ -1,0 +1,40 @@
+@startuml
+header Page: Revision 1
+footer Page %page% of %lastpage%
+
+title Console Connect and Telemetry Sequence
+
+actor APPLICATION
+collections gRPC_HTTP2
+actor Console_Service
+collections FracTalk_TCP_IP
+actor Syringe_FRU
+actor Valve_FRU
+actor Heater_FRU
+
+== Assumes Initialization and Discovery Completed ==
+APPLICATION -> Console_Service: Console Connect Request
+activate APPLICATION
+Console_Service -> Syringe_FRU: Console Connect Request
+Syringe_FRU --> Valve_FRU: Connect Request
+Syringe_FRU --> Heater_FRU: Connect Request
+Syringe_FRU <-- Valve_FRU: Connect Response
+Syringe_FRU <-- Heater_FRU: Connect Response
+== Syringe has open sockets with each of Valve and Heater FRUs ==
+Console_Service <-- Syringe_FRU: Console Connect Response
+APPLICATION <-- Console_Service: Console Connect Response
+deactivate APPLICATION
+== Console service has open socket with Syringe FRU ==
+== Application has open gRPC session with Console service ==
+== Periodic 20 Hz Telemetry Sent up to Application ==
+Syringe_FRU <-- Valve_FRU: FRU Telemetry Data Valve
+Syringe_FRU <-- Heater_FRU: FRU Telemetry Data Heater
+Console_Service <-- Syringe_FRU: Console Telemetry Data
+APPLICATION <-- Console_Service: Console Telemetry Data
+... 50 mSec later ...
+Syringe_FRU <-- Valve_FRU: FRU Telemetry Data Valve
+Syringe_FRU <-- Heater_FRU: FRU Telemetry Data Heater
+Console_Service <-- Syringe_FRU: Console Telemetry Data
+APPLICATION <-- Console_Service: Console Telemetry Data
+
+@enduml

@@ -1,0 +1,34 @@
+@startuml
+header Page: Revision 1
+footer Page %page% of %lastpage%
+
+title FRU Commands Syringe
+
+actor APPLICATION
+collections gRPC_HTTP2
+actor Console_Service
+collections FracTalk_TCP_IP
+actor Syringe_FRU
+actor Valve_FRU
+actor Heater_FRU
+
+== Assumes FRU Connected ==
+APPLICATION -> Console_Service: FRU Initialize
+activate APPLICATION
+Console_Service -> Syringe_FRU: FRU Initialize
+Console_Service <- Syringe_FRU: FRU Success
+Console_Service <-- Syringe_FRU: FRU Telemetry Syringe
+note right: Periodic telemetry message
+APPLICATION <- Console_Service: FRU Success
+deactivate APPLICATION
+APPLICATION <-- Console_Service: FRU Telemetry Syringe
+
+APPLICATION -> Console_Service: FRU Run Self-Test
+activate APPLICATION
+Console_Service -> Syringe_FRU: FRU Run Self-Test
+Console_Service <- Syringe_FRU: FRU Success
+APPLICATION <- Console_Service: FRU Success
+deactivate APPLICATION
+
+
+@enduml

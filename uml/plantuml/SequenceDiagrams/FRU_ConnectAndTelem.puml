@@ -1,0 +1,34 @@
+@startuml
+header Page: Revision 1
+footer Page %page% of %lastpage%
+
+title FRU Connect and Telemetry Sequence
+
+actor APPLICATION
+collections gRPC_HTTP2
+actor Console_Service
+collections FracTalk_TCP_IP
+actor Syringe_FRU
+actor Valve_FRU
+actor Heater_FRU
+
+== Assumes Initialization and Discovery Completed ==
+APPLICATION -> Console_Service: FRU Connect Request Valve
+activate APPLICATION
+Console_Service -> Valve_FRU: FRU Connect
+Console_Service <- Valve_FRU: FRU Connect Accepted
+APPLICATION <- Console_Service: FRU Connect Success
+deactivate APPLICATION
+== Console service has open socket with Valve FRU ==
+== Application has open gRPC session with Console service ==
+== FRU Telemetry Feed Auto Initiates at 20 Hz ==
+Console_Service <-- Valve_FRU: FRU Telemetry Valve
+APPLICATION <-- Console_Service: FRU Telemetry Valve
+... 50 mSec later ...
+Console_Service <-- Valve_FRU: FRU Telemetry Valve
+APPLICATION <-- Console_Service: FRU Telemetry Valve
+... 50 mSec later ...
+Console_Service <-- Valve_FRU: FRU Telemetry Valve
+APPLICATION <-- Console_Service: FRU Telemetry Valve
+
+@enduml

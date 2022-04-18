@@ -1,0 +1,29 @@
+@startuml
+header Page: Revision 1
+footer Page %page% of %lastpage%
+
+title Console Disconnection Sequence
+
+actor APPLICATION
+collections gRPC_HTTP2
+actor Console_Service
+collections FracTalk_TCP_IP
+actor Syringe_FRU
+actor Valve_FRU
+actor Heater_FRU
+
+== Assumes Connected and Telemtry Active ==
+Console_Service <-- Syringe_FRU: Console Telemetry
+APPLICATION <-- Console_Service: Console Telemetry
+
+APPLICATION -> Console_Service: Console Disconnect Request
+activate APPLICATION
+Console_Service -> Syringe_FRU: Console Disconnect
+Syringe_FRU --> Valve_FRU: FRU Disconnect
+Syringe_FRU --> Heater_FRU: FRU Disconnect
+Console_Service <- Syringe_FRU: Console Disconnect Accepted
+APPLICATION <- Console_Service: Console Disconnect Success
+deactivate APPLICATION
+
+
+@enduml
