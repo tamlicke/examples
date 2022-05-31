@@ -1,0 +1,10 @@
+﻿-IC:\Users\tamli\projects\examples\ecoder\tire_pressure\generated_code\slprj\ert\sensorCoreAlgorithm
+-IC:\Users\tamli\projects\examples\ecoder\tire_pressure\generated_code
+-IC:\Users\tamli\projects\examples\ecoder\tire_pressure\models\sensor\target_specific_code\include
+-IC:\Users\tamli\projects\examples\ecoder\tire_pressure\generated_code\sensorCodeGenerationWrapper_ert_rtw
+-I"C:\Program Files\MATLAB\R2022a\extern\include"
+-I"C:\Program Files\MATLAB\R2022a\simulink\include"
+-I"C:\Program Files\MATLAB\R2022a\rtw\c\src"
+-I"C:\Program Files\MATLAB\R2022a\rtw\c\src\ext_mode\common"
+-I"C:\Program Files\MATLAB\R2022a\rtw\c\ert"
+-IC:\Users\tamli\projects\examples\ecoder\tire_pressure\generated_code\slprj\ert\_sharedutils
