@@ -1,0 +1,52 @@
+@startuml
+header Page: Revision 1
+footer Page %page% of %lastpage%
+
+title Levita Power On System Start Up
+
+actor technician
+collections Switch
+boundary ScopeCart
+boundary MagnetCart
+collections PowerOn
+entity System_Processor_NUC
+entity Scope_Robot_Arm_Controller
+entity Auxiliary_Processor_NUC
+entity Magnet_Robot_Arm_Controller
+collections systemd
+
+
+== Power On Hardware ==
+technician -> ScopeCart: Power On
+activate ScopeCart
+ScopeCart -> System_Processor_NUC: power applied
+activate System_Processor_NUC
+System_Processor_NUC -> SystemController : $start
+activate SystemController
+System_Processor_NUC -> ScopeGpio : $start
+activate ScopeGpio
+System_Processor_NUC -> VideoCapture : $start
+activate VideoCapture
+ScopeCart -> Scope_Robot_Arm_Controller: power applied
+activate Scope_Robot_Arm_Controller
+Scope_Robot_Arm_Controller -> ScopeSunriseOS : $start
+activate ScopeSunriseOS
+Scope_Robot_Arm_Controller -> ScopeBGT : $start
+activate ScopeBGT
+... 20 Sec later ...
+technician -> MagnetCart: Power On
+activate MagnetCart
+MagnetCart -> Auxiliary_Processor_NUC: power applied
+activate Auxiliary_Processor_NUC
+Auxiliary_Processor_NUC -> AuxiliaryController : $start
+activate AuxiliaryController
+Auxiliary_Processor_NUC -> MagnetGpio : $start
+activate MagnetGpio
+MagnetCart -> Magnet_Robot_Arm_Controller: power applied
+activate Magnet_Robot_Arm_Controller
+Magnet_Robot_Arm_Controller -> MagnetSunriseOS : $start
+activate MagnetSunriseOS
+Magnet_Robot_Arm_Controller -> MagnetBGT : $start
+activate MagnetBGT
+
+@enduml
