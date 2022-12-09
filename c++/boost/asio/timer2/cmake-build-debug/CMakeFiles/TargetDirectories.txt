@@ -1,0 +1,3 @@
+/home/parallels/projects/examples/c++/boost/asio/timer2/cmake-build-debug/CMakeFiles/timer2.dir
+/home/parallels/projects/examples/c++/boost/asio/timer2/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/parallels/projects/examples/c++/boost/asio/timer2/cmake-build-debug/CMakeFiles/rebuild_cache.dir

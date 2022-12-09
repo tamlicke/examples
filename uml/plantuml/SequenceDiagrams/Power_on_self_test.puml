@@ -1,0 +1,109 @@
+@startuml
+header Page: Revision 1
+footer Page %page% of %lastpage%
+
+title Levita Power On Self Test(POST)
+
+
+
+participant SystemController
+participant RecordingService
+participant RoutingService
+participant ScopeGpio
+participant VideoCapture
+participant ScopeSunriseOS
+participant ScopeRobotApp
+participant ScopeBGT
+participant AuxiliaryController
+participant MagnetGpio
+participant MagnetSunriseOS
+participant MagnetRobotApp
+participant MagnetBGT
+== Power On Self Test ==
+activate SystemController
+activate RecordingService
+activate RoutingService
+activate ScopeGpio
+activate VideoCapture
+activate ScopeSunriseOS
+activate ScopeBGT
+activate AuxiliaryController
+activate MagnetGpio
+activate MagnetSunriseOS
+activate MagnetBGT
+SystemController -> SystemController : Start POST Timer
+activate SystemController
+SystemController --> RecordingService : Log POST Start
+deactivate SystemController
+SystemController -> SystemController : Load System Data
+activate SystemController
+SystemController --> RecordingService : Log Data Loaded
+deactivate SystemController
+SystemController -> SystemController : SSD Present and Formatted
+activate SystemController
+SystemController --> RecordingService : Log SSD Ready
+deactivate SystemController
+SystemController -> SystemController : DDS Running
+activate SystemController
+SystemController --> RecordingService : Log DDS Ready
+deactivate SystemController
+== Start Scope Robot ==
+SystemController -> SystemController : Start Scope Robot App
+activate SystemController
+SystemController --> RoutingService : start Scope App
+deactivate SystemController
+RoutingService --> ScopeSunriseOS : UDP(start app)
+activate ScopeSunriseOS
+ScopeSunriseOS -> ScopeRobotApp : start default app
+deactivate ScopeSunriseOS
+activate ScopeRobotApp
+ScopeRobotApp --> RecordingService : log message
+ScopeRobotApp --> SystemController : Scope Robot App Ready
+activate SystemController
+deactivate SystemController
+
+== Start Magnet Robot ==
+SystemController -> SystemController : Start Magnet Robot App
+activate SystemController
+SystemController --> RoutingService : start Magnet App
+deactivate SystemController
+RoutingService --> MagnetSunriseOS : UDP(start app)
+activate MagnetSunriseOS
+MagnetSunriseOS -> MagnetRobotApp : start default app
+deactivate MagnetSunriseOS
+activate MagnetRobotApp
+MagnetRobotApp --> RecordingService : log message
+MagnetRobotApp --> SystemController : Scope Robot App Ready
+activate SystemController
+deactivate SystemController
+
+AuxiliaryController -> AuxiliaryController : Initialize
+activate AuxiliaryController
+ScopeGpio -> ScopeGpio : POST
+activate ScopeGpio
+VideoCapture -> VideoCapture : POST
+activate VideoCapture
+ScopeBGT -> ScopeBGT : initialize
+activate ScopeBGT 
+MagnetBGT -> MagnetBGT : initialize
+activate MagnetBGT
+AuxiliaryController --> RecordingService : log message
+AuxiliaryController --> SystemController : ready message
+deactivate AuxiliaryController
+MagnetGpio -> MagnetGpio : POST
+activate MagnetGpio
+ScopeGpio -> ScopeGpio : Check GPIO hardware
+ScopeGpio --> RecordingService : log message
+ScopeGpio --> SystemController : ready message
+deactivate ScopeGpio
+VideoCapture -> VideoCapture : Check Video Capture hardware
+VideoCapture --> RecordingService : log message
+VideoCapture --> SystemController : ready message
+deactivate VideoCapture
+MagnetGpio -> MagnetGpio : Check GPIO hardware
+MagnetGpio --> RecordingService : log message
+MagnetGpio --> SystemController : ready message
+deactivate MagnetGpio
+... 20 Sec later ...
+
+@enduml

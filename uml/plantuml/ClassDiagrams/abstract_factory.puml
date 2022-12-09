@@ -1,0 +1,45 @@
+@startuml
+' <= This is a comment in PlantUML
+
+' class definitions
+class WidgetFactory {
+    CreateScrollBar()
+    CreateWindow()
+}
+
+class QtWidgetFactory {
+    CreateScrollBar()
+    CreateWindow()
+}
+
+class GtkWidgetFactory {
+    CreateScrollBar()
+    CreateWindow()
+}
+
+class Client {
+    
+}
+
+' association
+Client -> WidgetFactory
+Client -> Window 
+Client -> ScrollBar 
+' Note: classes are created by just referring to them
+' (See Window and Scrollbar)
+
+' inheritance
+Window <|- QtWindow
+Window <|- GtkWindow
+WidgetFactory <|- QtWidgetFactory
+WidgetFactory <|- GtkWidgetFactory
+ScrollBar <|- QtScrollBar 
+ScrollBar <|- GtkScrollBar 
+
+' dependency
+QtWidgetFactory ..> QtWindow : $creates
+GtkWidgetFactory ..> GtkWindow : $creates
+QtWidgetFactory ..> QtScrollBar : $creates
+GtkWidgetFactory ..> GtkScrollBar : $creates
+
+@enduml
