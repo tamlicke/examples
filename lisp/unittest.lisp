@@ -269,8 +269,75 @@
   (is-true (XOR nil T))
   (is-false (XOR T T)))
 
+; exercise 1.21
+; What is wrong with each of these functions?
+; -->ZEROP --> ADD1 -->
+;
+; ---> + --> EQUAL ==>
+; -->/
+;
+; ---> NOT --> SYMBOLP -->
+; -->/
   
+(defun ZEROP-ADD1 (n1)
+  
+  (ADD1 (ZEROP n1)))
 
+;(defun PLUS-EQUAL (n1 n2)
+;  (EQUAL (+ n1 n2)))
+
+;(defun NOT-SYMBOLP (n1 n2)
+;  (SYMBOLP (NOT n1 n2)))
+
+(test wrong-functions
+;  (is (= (ZEROP-ADD1 1) 1))
+  (signals type-error (ZEROP-ADD1 1))
+;  (is-true (PLUS-EQUAL 0 1))
+ ; (is-true (NOT-SYMBOLP T T))
+)
+
+; exercise 1.22
+; Are all predicates functions?
+; Yes
+;
+; Are all functions predicates?
+; No
+
+; exercise 1.23
+; Which build-in predicates introduced in this change have
+; names that do not end in "P"?
+; EQUAL
+; NOT
+; AND
+; OR
+; <
+; >
+
+; exercise 1.24
+; Is NUMBER a number?
+; No
+;
+; Is SYMBOL a symbol?
+; Yes
+
+; exercise 1.25
+; Why is FALSE true in Lisp?
+; FALSE is a symbol and all symbols other than nil are true
+
+; exercise 1.26
+; True or false;
+; (a) All predicates accept T or NIL as input?
+; false 
+; (b) all predicates produce T or NIL as output
+; true
+
+; exercise 1.27
+; Give an example of the use of EVENP that would cause a 
+; wrong-type-input-error.
+; (EVENP nil)
+;
+; Give an example that would cause a wrong-number-of-inputs error.
+; (NO
  
 
 
