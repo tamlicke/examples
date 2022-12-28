@@ -817,6 +817,62 @@
   (is-true (UNARY-MORE-THAN-ONEP '(X X)))
   (is-false (UNARY-MORE-THAN-ONEP '())))
 
+; Nonlist CONS structures
+
+(test non-list-cons-test
+  (is (EQUAL (CONS 'A (CONS 'B '(C))) '(A B C)))
+  (is (EQUAL (CONS 'A (CONS 'B (CONS 'C 'D))) '(A B C . D)))
+  (is (EQUAL (CONS 'A 'B) '(A . B)))
+  (is (EQUAL (CAR '(A . B)) 'A))
+  (is (EQUAL (CDR '(A . B)) 'B))
+  (is (EQUAL (CONS 'A (CONS 'B 'C)) '(A B . C))))
+
+; dotted list '(A B C . D) 
+; dotted pair '(A . B)
+
+; exercise 2.34
+; Write an expression involving cascaded calls to CONS to construct 
+; the dotted list (A B C . D)
+
+(test dotted-list-test
+  (is (EQUAL (CONS 'a (CONS 'b (CONS 'c 'd))) '(a b c . d))))
+
+; exercise 2.35
+; Draw the dotted list ((A .C) (C . D)) in cos cel notation.  Write an
+; expression to construct this list.
+
+(test double-dotted-list-test
+  (is (EQUAL (CONS (CONS 'A 'C) (CONS (CONS 'C 'D) ())) '((A . C) (C . D)))))
+
+; CIRCULAR LISTS
+
+(test circular-list-test
+  (is (EQUAL (CAR '#1=(A B C . #1#)) 'A))
+  (is (EQUAL (CADR '#2=(A B C . #2#)) 'B))
+  (is (EQUAL (CADDR '#3=(A B C . #3#)) 'C))
+  (is (EQUAL (CADDDR '#4=(A B C . #4#)) 'A))
+  (is (EQUAL (CAR '#5=(A . #5#)) 'A))
+  (is (EQUAL (CADR '#6=(A . #6#)) 'A))
+  (is (EQUAL (CDR '#7=(#7# . A)) 'A)))
+
+; Length of nonlist CONS structure
+
+;(test nonlist-length-test
+;  (is (= (LENGTH '(A B C . D)) 3)))
+; does not work on Clozure
+
+; The SDRAW Tool
+; 
+; SDRAW
+; SDRAW-LOOP
+; SCRAWL
+
+
+
+
+
+  
+
  
 
 
