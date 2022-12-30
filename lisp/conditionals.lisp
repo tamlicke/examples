@@ -364,7 +364,59 @@
 ; exercise 4.18
 ; ROCK PAPER SCISSORS
 
-     
+; 4.12 Boolean functions
+
+(defun logical-and (x y)
+  (and x y t))
+
+(test logical-and-test
+  (is (equal (logical-and 'tweet 'woof) t))
+  (is (equal (and 'tweet 'woof) 'woof)))
+
+; exercise 4.29
+
+; exercise 4.30
+
+; exercise 4.31
+
+; 4.13 Truth tables
+
+; exercise 4.32
+
+; exercise 4.33
+
+; exercise 4.34
+
+; 4.14 DeMorgan's Theorem
+
+(defun demorgan-and (x y)
+  (not (or (not x) (not y))))
+
+(defun demorgan-or (x y)
+  (not (and (not x) (not y))))
+
+(test demorgans-theorem-test
+  (is (equal (and nil nil) (demorgan-and nil nil)))
+  (is (equal (or nil nil) (demorgan-or nil nil)))
+  (is (equal (and nil t) (demorgan-and nil t)))
+  (is (equal (or nil t) (demorgan-or nil t)))
+  (is (equal (and t nil) (demorgan-and t nil)))
+  (is (equal (or t nil) (demorgan-or t nil)))
+  (is (equal (and t t) (demorgan-and t t)))
+  (is (equal (or t t) (demorgan-or t t))))
+
+; exercise 4.35
+
+; exercise 4.36
+
+; exercise 4.37
+
+; exercise 4.38
+
+; exercise 4.39
+
+
+
 
 
 
