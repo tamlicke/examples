@@ -1,4 +1,4 @@
-; 28 DEcember 2022
+; 28 December 2022
 ; Conditionals
 ; Common LISP
 ; A Gentle Introduction to Symbolic Computation
@@ -9,7 +9,10 @@
 (defpackage my-eval-test
   (:use :cl
         :fiveam)
-  (:export :throw-die-histogram))
+  (:export :throw-die-histogram
+           :throw-die
+           :throw-dice
+           :craps))
 
 (in-package :my-eval-test)
 
@@ -167,17 +170,120 @@
               ((= throw 3) (setf threes (+ threes 1)))
               ((= throw 4) (setf fours (+ fours 1)))
               ((= throw 5) (setf fives (+ fives 1)))
-              (T (setf sixes (+ sixes (+ sixes 1))))
-        )))
+              (T (setf sixes (+ sixes 1))))
+        ))
     (list ones twos threes fours fives sixes)))
         
+;(b)
+; Write a function THROW-DICE that throws two die and returns a 
+; list of two numbers; the value of the first die and the value of the
+; second. We'll call this list a "throw." For example, (THROW-
+; DICE) might return the throw (3 5), indicating that the first die was 
+; a 3 and the second a 5.
 
+(defun THROW-DICE ()
+  (list (throw-die) (throw-die)))
 
+(test throw-dice-test
+  (dotimes (i 100)
+    (let ((throw (throw-dice)))
+        (is (> (car throw) 0))
+        (is (< (car throw) 7))
+        (is (> (cadr throw) 0))
+        (is (< (cadr throw) 7)))))
 
+;(c)
+; Throwing two ones is called "snake eyes"; two sixes is called
+; "boxcars."  Write predicates SNAKE-EYES-P and BOXCARS-P
+; that take a throw as input and return T if the throw is equal to (1 1)
+; or (6 6), respectively.
 
+(defun SNAKE-EYE-P (throw)
+  (if (AND (EQUAL (CAR throw) 1) (EQUAL (CADR throw) 1)) T nil))
 
+(defun BOXCARS-P (throw)
+  (if (AND (EQUAL (CAR throw) 6) (EQUAL (CADR throw) 6)) T nil))
 
+(test snake-eye-p-test 
+   (is-true (snake-eye-p '(1 1)))
+   (is-false (snake-eye-p '(1 3)))
+   (is-false (snake-eye-p '(3 1)))
+   (is-true (boxcars-p '(6 6)))
+   (is-false (snake-eye-p '(6 3)))
+   (is-false (snake-eye-p '(3 6))))
 
+; (d)
+; In playing craps, the first throw of the dice is crucial.  A throw of 7
+; or 11 is an instant win.  A throw of 2, 3, or 12 is an instant loss
+; (American casino rules).  Write predicates INSTANT-WIN-P and 
+; INSTANT-LOSS-P to detect these conditions.  Each should take a 
+; throw as input.
 
+(defun instant-win-p (throw)
+  "7 or 11 is instant loss"
+  (let ((sum (+ (car throw) (cadr throw))))
+    (cond ( (= sum 7) T)
+          ( (= sum 11) t)
+          ( T nil))))
 
+(defun instant-loss-p (throw)
+  "2, 3, or 12 is instant loss"
+  (let ((sum (+ (car throw) (cadr throw))))
+    (cond ( (= sum 2) T)
+          ( (= sum 3) T)
+          ( (= sum 12) t)
+          ( T nil))))
 
+(test instant-win-p-test
+  (is-true (instant-win-p '(3 4)))
+  (is-true (instant-win-p '(6 5)))
+  (is-false (instant-win-p '(1 1 ))))
+
+(test instant-loss-p-test
+  (is-true (instant-loss-p '(1 1)))
+  (is-true (instant-loss-p '(2 1)))
+  (is-true (instant-loss-p '(6 6 )))
+  (is-false (instant-loss-p '(3 4))))
+
+; (e)
+; Write a function SAY-THROW that takes a throw as input and
+; returns either the sumof the two dice or the symbol SNAKE-EYES
+; or BOXCARS if the sum is 2 or 12. (SAY-THROW '(3 4)) should
+; return 7. (SAY-THROW '(6 6)) should return BOXCARS.
+
+(defun SAY-THROW (throw)
+  "returns symbols: SNAKE-EYES for (1 1) and BOXCARS for (6 6) otherwise returns the sum of the two numbers"
+  (let ((sum (+ (car throw) (cadr throw))))
+    (cond ((= sum 2) 'SNAKE-EYES)
+          ((= sum 12) 'BOXCARS)
+          (T sum))))
+
+(test say-throw-test 
+  (is (equal (say-throw '(1 1)) 'SNAKE-EYES))
+  (is (equal (say-throw '(6 6)) 'BOXCARS))
+  (is (equal (say-throw '(1 3)) 4)))
+
+; (f)
+; If you don't win or lose on the first throw of the dice, the value you
+; threw becomes your "point," which you will be explained shortly.
+; Write a function (CRAPS) that produces the follow sort of 
+; behavior. Your solution should make use of the functions you wrote
+; in previous steps.
+
+; > (CRAPS)
+; (THROW 1 AND 1 -- SNAKE-EYES -- YOU LOSE)
+
+; > (CRAPS)
+; (THROW 3 AND 4 -- 7 -- YOU WIN)
+
+; > (craps)
+; (THROW 2 AND $ -- YOUR POINT IS 6)
+
+(defun CRAPS ()
+  "Play craps"
+  (let ((throw (throw-dice)))
+    (cond ((instant-win-p throw) `( THROW ,(car throw) AND ,(cadr throw) -- ,(say-throw throw) -- YOU WIN))
+          ((instant-loss-p throw)  `( THROW ,(car throw) AND ,(cadr throw) -- ,(say-throw throw) -- YOU LOSE))
+          (T `( THROW ,(car throw) AND ,(cadr throw) -- YOUR POINT IS ,(say-throw throw))))))
+ 
+  
