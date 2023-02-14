@@ -42,5 +42,9 @@
 ; Exercise 6.2
 ; What is the value of (NTH 3 '(A B C . D), and why?
 
+(test nth-test-2
+  (is (equal (nth 3 '(A B C . D)) 'C)))
+
+
 
 
