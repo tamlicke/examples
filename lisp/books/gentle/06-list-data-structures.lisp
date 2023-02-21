@@ -43,7 +43,11 @@
 ; What is the value of (NTH 3 '(A B C . D), and why?
 
 (test nth-test-2
-  (is (equal (nth 2 '(A B C . D)) 'C)))
+  (is (equal 
+    (handler-case (nth 3 '(A B C . D))
+      (type-error (c)
+        (values c)))
+    "D is not a list")))
 
 
 
