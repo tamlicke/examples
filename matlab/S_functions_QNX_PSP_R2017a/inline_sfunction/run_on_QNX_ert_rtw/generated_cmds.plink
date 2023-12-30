@@ -1,0 +1,3 @@
+root
+chmod +x /tmp/run_on_QNX
+exit

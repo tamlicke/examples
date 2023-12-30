@@ -1,0 +1,10 @@
+serial_test_model_data.c.o: serial_test_model_data.c serial_test_model.h \
+ rtwtypes.h serial_test_model_types.h serial_test_model_private.h
+
+serial_test_model.h:
+
+rtwtypes.h:
+
+serial_test_model_types.h:
+
+serial_test_model_private.h:

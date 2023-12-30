@@ -1,0 +1,13 @@
+ert_main.c.o: ert_main.c serial_test_model.h rtwtypes.h \
+ serial_test_model_types.h serial_test_model_private.h \
+ C:/PROGRA~1/MATLAB/R2017a/toolbox/target/codertarget/rtos/inc/linuxinitialize.h
+
+serial_test_model.h:
+
+rtwtypes.h:
+
+serial_test_model_types.h:
+
+serial_test_model_private.h:
+
+C:/PROGRA~1/MATLAB/R2017a/toolbox/target/codertarget/rtos/inc/linuxinitialize.h:
