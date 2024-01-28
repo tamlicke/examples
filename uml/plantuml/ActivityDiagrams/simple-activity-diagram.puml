@@ -1,0 +1,24 @@
+@startuml
+
+(*) --> "Receive Order"
+"Receive Order" --> ===B1===
+===B1=== --> "Fill Order"
+"Fill Order" --> if "" then
+  --> [priority order] "Overnight Delivery"
+else 
+  --> [else] "Regular Delivery"
+endif 
+
+"Overnight Delivery" --> === merge ===
+"Regular Delivery" --> === merge ===
+
+===B1=== --> "Send Invoice"
+"Send Invoice" --> "Receive Payment"
+"Receive Payment" --> ===B2===
+===merge=== --> ===B2===
+
+===B2=== --> "Close Order"
+"Close Order" --> (*)
+
+
+@enduml

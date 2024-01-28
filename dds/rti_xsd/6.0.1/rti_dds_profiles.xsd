@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ (c) Copyright, Real-Time Innovations, 2012-2016.
+ All rights reserved.
+ Permission to modify and use for internal purposes granted.
+ This software is provided "as is", without warranty, express or implied.
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <xs:include schemaLocation="definitions/rti_dds_profiles_definitions.xsd"/>
+
+    <xs:element name="dds">
+        <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="qos_library" type="qosLibrary"/>
+                <xs:element name="types" type="typeLibrary"/>
+                <xs:element name="domain_library" type="domainLibrary"/>
+                <xs:element name="domain_participant_library" type="participantLibrary"/>
+            </xs:choice>
+            <xs:attribute name="version" type="xs:string" use="optional" default="6.0.1">
+                <xs:annotation>
+                    <xs:documentation>
+                        <![CDATA[
+                        Specifies the version number of the XML Schema which is
+                        tied to the RTI Connext DDS Professional or RTI Connext DDS 
+                        Secure version number.
+                        ]]>
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

@@ -1,0 +1,10 @@
+@startuml
+class RobotStateProviderBGT
+RobotStateProviderBGT : + NAME : static final String = "RobotStateProvider"
+RobotStateProviderBGT : + LOCAL_PORT : static final int = 30008
+RobotStateProviderBGT --> ITaskLogger : _logger
+RobotStateProviderBGT --> LBRMed : _lbrMed
+RobotStateProviderBGT --> IRobotState : _robotState
+RobotStateProviderBGT : intialize()
+
+@end
